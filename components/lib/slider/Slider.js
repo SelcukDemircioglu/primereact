@@ -47,8 +47,17 @@ export class Slider extends Component {
         this.handleIndex = 0;
     }
 
-    get value() {
-        return this.props.range ? this.props.value || [0, 100] : this.props.value || 0;
+      get value() {
+        var rangevalue=null;
+        if(this.props.range&&this.props.value){
+            const endvalue=this.props.value[1]<=this.props.max?this.props.value[1]: this.props.max;
+            const startvalue=this.props.value[0]<=this.props.max?this.props.value[0]: this.props.min;
+            rangevalue=[startvalue,endvalue];
+        } 
+        if(this.props.range&&!this.props.value){
+            rangevalue=[this.props.min,this.props.max];
+        } 
+        return this.props.range ? rangevalue || [0, 100] : this.props.value || 0;
     }
 
     spin(event, dir) {
